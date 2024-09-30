@@ -5,7 +5,7 @@ const LoginRegister = () => {
   const [isLogin, setIsLogin] = useState(true); // Toggle between login and register forms
   const [loginData, setLoginData] = useState({ email: "", password: "" });
   const [registerData, setRegisterData] = useState({
-    username: "",
+    userName: "",
     email: "",
     password: "",
     confirmPassword: "",
@@ -52,7 +52,7 @@ const LoginRegister = () => {
       const response = await axios.post(
         "https://todos-backend-vxxj.onrender.com/api/user/register",
         {
-          username: registerData.username,
+          userName: registerData.userName,
           email: registerData.email,
           password: registerData.password,
         }
@@ -138,14 +138,14 @@ const LoginRegister = () => {
         {!isLogin && (
           <form onSubmit={handleRegister}>
             <div className="mb-4">
-              <label className="block mb-2 font-semibold">Username</label>
+              <label className="block mb-2 font-semibold">UserName</label>
               <input
                 type="text"
-                name="username"
-                value={registerData.username}
+                name="userName"
+                value={registerData.userName}
                 onChange={(e) => handleInputChange(e, "register")}
                 className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="Enter your username"
+                placeholder="Enter your userName"
                 required
               />
             </div>
