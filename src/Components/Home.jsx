@@ -1,6 +1,7 @@
 import axios from "axios";
 import { format } from "date-fns";
 import React, { useEffect, useState } from "react";
+import { toast } from "sonner";
 
 const App = () => {
   const [currentUser, setCurrentUser] = useState("");
@@ -102,12 +103,12 @@ const App = () => {
     const token = localStorage.getItem("key");
 
     if (!token) {
-      console.log("No token found. Please log in.");
+      toast.warning("No token found. Please log in.");
       return;
     }
     const { title, description, dueDate } = newTodo;
     if (!title || !description || !dueDate) {
-      console.log("Title, Description, and Due Date are required.");
+      toast.warning("Title, Description, and Due Date are required.");
       return;
     }
     try {
@@ -127,22 +128,22 @@ const App = () => {
       );
 
       if (!response) {
-        console.log("No response from server. Could not add new Todo.");
+        toast.error("No response from server. Could not add new Todo.");
         return;
       }
-
+      toast.success("Added new todo");
       setTodos([...todos, response.data]);
       setNewTodo({ title: "", description: "", dueDate: "" }); // Clear the form after submission
     } catch (err) {
       if (err.response) {
         // Server responded with a status other than 200 range
-        console.log(`Server error: ${err.response.data.message}`);
+        toast.error(`Server error: ${err.response.data.message}`);
       } else if (err.request) {
         // Request was made but no response received
-        console.log("Network error: No response received from server.");
+        Toaster.error("Network error: No response received from server.");
       } else {
         // Something else happened while setting up the request
-        console.log(`Error: ${err.message}`);
+        toast.error(`Error: ${err.message}`);
       }
     }
   };
@@ -153,7 +154,7 @@ const App = () => {
     try {
       const { title, description } = currentTodo;
       if (!title || !description) {
-        console.log("Title and Description are required.");
+        toast.warning("Title and Description are required.");
         return;
       }
 
@@ -163,7 +164,7 @@ const App = () => {
         existingTodo.title === title &&
         existingTodo.description === description
       ) {
-        console.log("No changes detected. Update not required.");
+        toast.warning("No changes detected. Update not required.");
         setIsEditing(false);
         return;
       }
@@ -181,6 +182,10 @@ const App = () => {
           },
         }
       );
+      if (!response) {
+        toast.error("No response from server. Could not edit Todo.");
+        return;
+      }
 
       setTodos(todos.map((todo) => (todo._id === id ? response.data : todo)));
       setIsEditing(false);
@@ -193,8 +198,12 @@ const App = () => {
   // Delete Todo
   const handleDeleteTodo = async (id) => {
     const token = localStorage.getItem("key");
+    if (!token) {
+      toast.warning("No token found. Please log in.");
+      return;
+    }
     try {
-      await axios.delete(
+      const response = await axios.delete(
         `https://todos-backend-vxxj.onrender.com/api/todos/delete/${id}`,
         {
           headers: {
@@ -202,10 +211,19 @@ const App = () => {
           },
         }
       );
+      if (!response) {
+        toast.error("No response from server. Could not delete Todo.");
+        return;
+      }
+      toast.success("Todo deleted");
       setTodos(todos.filter((todo) => todo._id !== id));
     } catch (err) {
       console.log(err);
     }
+  };
+  const handleLogout = async () => {
+    localStorage.removeItem("key");
+    window.location.href = "/";
   };
 
   return (
@@ -329,6 +347,12 @@ const App = () => {
           ))}
         </ul>
       )}
+      <button
+        onClick={handleLogout}
+        className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 mt-4"
+      >
+        Logout
+      </button>
     </div>
   );
 };
