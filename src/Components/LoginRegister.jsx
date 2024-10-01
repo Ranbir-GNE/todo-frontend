@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
+import { toast } from "sonner";
 
 const LoginRegister = () => {
   const [isLogin, setIsLogin] = useState(true); // Toggle between login and register forms
@@ -31,9 +32,13 @@ const LoginRegister = () => {
           password: loginData.password,
         }
       );
+      if (!response) {
+        setErrorMessage("Login failed. Please try again.");
+        return;
+      }
       const token = response.data.token;
       localStorage.setItem("key", `${token}`);
-      console.log("Login Success:", token);
+      toast.success("Login successful!");
       window.location.href = "/home";
     } catch (error) {
       setErrorMessage(
@@ -57,7 +62,11 @@ const LoginRegister = () => {
           password: registerData.password,
         }
       );
-      console.log("Registration Success:", response.data);
+      if (!response) {
+        toast.error("Registration failed. Please try again.");
+        return;
+      }
+      toast.success("Registration Success");
     } catch (error) {
       setErrorMessage(
         error.response?.data?.message ||

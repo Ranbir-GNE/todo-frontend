@@ -113,7 +113,7 @@ const App = () => {
     }
     try {
       const response = await axios.post(
-        "https://todos-backend-vxxj.onrender.com/api/todos/create",
+        "https://todos-backend-rouge.vercel.app/api/todos/create",
         {
           title: title,
           description: description,
@@ -140,7 +140,7 @@ const App = () => {
         toast.error(`Server error: ${err.response.data.message}`);
       } else if (err.request) {
         // Request was made but no response received
-        Toaster.error("Network error: No response received from server.");
+        toast.error("Network error: No response received from server.");
       } else {
         // Something else happened while setting up the request
         toast.error(`Error: ${err.message}`);
