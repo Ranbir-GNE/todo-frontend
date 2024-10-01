@@ -25,7 +25,7 @@ const LoginRegister = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "https://todos-backend-vxxj.onrender.com/api/user/login",
+        "todos-backend-rouge.vercel.app/api/user/login",
         {
           email: loginData.email,
           password: loginData.password,
@@ -50,7 +50,7 @@ const LoginRegister = () => {
     }
     try {
       const response = await axios.post(
-        "https://todos-backend-vxxj.onrender.com/api/user/register",
+        "todos-backend-rouge.vercel.app/api/user/register",
         {
           userName: registerData.userName,
           email: registerData.email,
