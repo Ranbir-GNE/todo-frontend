@@ -25,7 +25,7 @@ const App = () => {
     const token = localStorage.getItem("key");
     try {
       const response = await axios.get(
-        `todos-backend-rouge.vercel.app/api/user/find-user/${id}`,
+        `https://todos-backend-rouge.vercel.app/api/user/find-user/${id}`,
         {
           headers: {
             Authorization: `${token}`,
@@ -55,7 +55,7 @@ const App = () => {
     const token = localStorage.getItem("key");
     try {
       const response = await axios.get(
-        `todos-backend-rouge.vercel.app/api/user/get-user`,
+        `https://todos-backend-rouge.vercel.app/api/user/get-user`,
         {
           headers: {
             Authorization: `${token}`,
@@ -74,7 +74,7 @@ const App = () => {
     const token = localStorage.getItem("key");
     try {
       const response = await axios.get(
-        "todos-backend-rouge.vercel.app/api/todos",
+        "https://todos-backend-rouge.vercel.app/api/todos",
         {
           headers: {
             Authorization: `${token}`,
@@ -113,7 +113,7 @@ const App = () => {
     }
     try {
       const response = await axios.post(
-        "todos-backend-rouge.vercel.app/api/todos/create",
+        "https://todos-backend-vxxj.onrender.com/api/todos/create",
         {
           title: title,
           description: description,
@@ -170,7 +170,7 @@ const App = () => {
       }
 
       const response = await axios.put(
-        `todos-backend-rouge.vercel.app/api/todos/update-todo/${id}`,
+        `https://todos-backend-rouge.vercel.app/todos/update-todo/${id}`,
         {
           title: title,
           description: description,
@@ -204,7 +204,7 @@ const App = () => {
     }
     try {
       const response = await axios.delete(
-        `todos-backend-rouge.vercel.app/api/todos/delete/${id}`,
+        `https://todos-backend-rouge.vercel.app/api/todos/delete/${id}`,
         {
           headers: {
             Authorization: `${token}`,
