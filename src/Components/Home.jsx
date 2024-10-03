@@ -170,7 +170,7 @@ const App = () => {
       }
 
       const response = await axios.put(
-        `https://todos-backend-rouge.vercel.app/todos/update-todo/${id}`,
+        `https://todos-backend-rouge.vercel.app/api/todos/update-todo/${id}`,
         {
           title: title,
           description: description,
